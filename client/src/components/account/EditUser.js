@@ -37,8 +37,9 @@ class EditUser extends React.Component {
         this.props.close()
   }
   render() {
+    if(!this.props.userInfo) return <div></div>
     return (
-      <div>
+     
         <BaseForm
           fields={fields}
           data={this.props.userInfo}
@@ -48,8 +49,10 @@ class EditUser extends React.Component {
           imgFrom="profile"
           url='/otheruser'
           userId={this.props.userInfo._id}
+          size='100px'
         ></BaseForm>
-      </div>
+        
+      
     );
   }
 }

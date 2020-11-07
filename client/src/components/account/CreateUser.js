@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import {createUser } from "../../actions/authActions";
+import { createUser } from "../../actions/authActions";
+import { fetchCompanyUsers } from "../../actions/companyActions";
 import BaseForm from "../BaseForm";
+import { FloatLeftDiv } from "../shared/styles";
 const validate = (values) => {
   const errors = {};
   const passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.*\s).{8,}$/;
@@ -26,6 +28,7 @@ const fields = [
     label: "User type",
     name: "userType",
     type: "select",
+    defaultValue: 0,
     options: [
       {
         value: 0,
@@ -39,15 +42,16 @@ const fields = [
 ];
 class CreateUser extends React.Component {
   update = (formValues) => {
-    if (this.props.image) formValues.createUserForm.values.imageUrl = this.props.image;
-    this.props.createUser(
-      formValues.createUserForm.values,
-    );
-    this.props.onSubmit()
+    if (this.props.image)
+      formValues.createUserForm.values.imageUrl = this.props.image;
+    if (!formValues.createUserForm.values.userType)
+      formValues.createUserForm.values.userType = 0;
+    this.props.createUser(formValues.createUserForm.values);
+    this.props.onSubmit();
   };
   render() {
     return (
-      <div>
+      <FloatLeftDiv>
         <BaseForm
           fields={fields}
           data={{}}
@@ -56,8 +60,9 @@ class CreateUser extends React.Component {
           formName="createUserForm"
           imgFrom="profile"
           noUpdateDb={true}
+          size="100px"
         ></BaseForm>
-      </div>
+      </FloatLeftDiv>
     );
   }
 }
@@ -65,9 +70,10 @@ class CreateUser extends React.Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    image:state.image
+    image: state.image,
+    usersList: state.usersList,
   };
 };
-export default connect(mapStateToProps, { createUser })(
+export default connect(mapStateToProps, { createUser, fetchCompanyUsers })(
   CreateUser
 );

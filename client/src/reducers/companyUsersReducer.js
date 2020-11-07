@@ -1,4 +1,4 @@
-const companyUsersReducer = (state = null, action) => {
+const companyUsersReducer = (state = [], action) => {
     switch (action.type) {
       case "FETCH_COMPANY_USERS":{
         return action.payload;

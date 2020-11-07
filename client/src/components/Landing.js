@@ -9,7 +9,8 @@ class Landing extends React.Component {
     else if (!this.props.auth) return <Login></Login>;
     else if (!localStorage.getItem('selectedCompany')) return <CompanySelectForm />;
     else
-      return 
+      return <div style={{position:'absolute',top:'80px',left:'39%'}}><h1>Welcome to ShipMe</h1>
+      <p style={{textAlign:'center'}}>your new Home for deliveries</p></div>
   }
   render() {
     return <div>{this.renderLand()}</div>;

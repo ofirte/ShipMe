@@ -1,4 +1,5 @@
 import axios from "axios";
+import {fetchCompanyUsers} from './companyActions'
 export const fetchUserToList = (userId) => (dispatch) => {
   const token = localStorage.getItem("token");
   axios
@@ -55,5 +56,5 @@ export const onUserDelete = (userId) => (dispatch) => {
         },
       }
     )
-    .then(dispatch({type:'DELETE_USER_FROM_LIST',payload:userId}));
+    .then(dispatch({type:'DELETE_USER_FROM_LIST',payload:userId})).then(()=>dispatch(fetchCompanyUsers()));
 };

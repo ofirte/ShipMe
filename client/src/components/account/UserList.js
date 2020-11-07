@@ -3,21 +3,22 @@ import { connect } from "react-redux";
 import UserEntry from "./UserEntry";
 import { fetchCompanyUsers } from "../../actions/companyActions";
 import { fetchUserToList, onUserDelete } from "../../actions/userActions";
+import { Ul } from "../shared/styles";
 class UserList extends React.Component {
-  componentDidMount() {
-    this.props.fetchCompanyUsers();
-  }
-  componentDidUpdate(prevProps) {
-    if (
-      !prevProps.companyUsers &&
-      prevProps.companyUsers !== this.props.companyUsers
-    ) {
-      this.props.companyUsers.map((user, index) => {
-        this.props.fetchUserToList(user.userId);
-        return "";
-      });
-    }
-  }
+  // componentDidMount() {
+  //   this.props.fetchCompanyUsers();
+  // }
+  // componentDidUpdate(prevProps) {
+  //   if (
+  //     prevProps.companyUsers.length===0 &&
+  //     prevProps.companyUsers !== this.props.companyUsers
+  //   ) {
+  //     this.props.companyUsers.map((user, index) => {
+  //       this.props.fetchUserToList(user.userId);
+  //       return "";
+  //     });
+  //   }
+  // }
 
   onDeleteUser = (userId) => {
     this.props.onUserDelete(userId);
@@ -36,22 +37,26 @@ class UserList extends React.Component {
             imageUrl={user.imageUrl}
             firstName={user.firstName}
             lastName={user.lastName}
+            email={user.email}
             jobTitle={user.jobTitle}
             onUserEdit={this.props.onUserEdit}
             onUserDelete={this.onDeleteUser}
             id={user._id}
-            managerId={this.props.companyUsers?this.props.companyUsers[0].userId:''}
+            managerId={
+              this.props.companyUsers ? this.props.companyUsers[0].userId : ""
+            }
           />
         ));
     return;
   }
   render() {
-    return (
-      <div>
-        <h5>userList!</h5>
-        {this.renderUsers(this.props.term)}
-      </div>
-    );
+    // if(this.props.companyUsers&&this.props.usersList){
+    //   if(this.props.companyUsers.length!==this.props.usersList.length){
+    //     return <div>Loading...</div>
+        
+    //   }
+    // }
+    return <Ul>{this.renderUsers(this.props.term)}</Ul>;
   }
 }
 const mapStateToProps = (state) => {

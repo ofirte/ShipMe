@@ -51,6 +51,7 @@ class Profile extends React.Component {
           validate={validate}
           formName="profileForm"
           imgFrom="profile"
+          size='310px'
         ></BaseForm>
       </div>
     );

@@ -5,6 +5,8 @@ import { logout } from "../actions/authActions";
 
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+import Avatar from "react-avatar";
+import { FloatLeftDiv } from "./shared/styles";
 const HeaderWrapper = styled("div")`
   height: 60px;
   width: 100%;
@@ -13,8 +15,8 @@ const HeaderWrapper = styled("div")`
   padding: 0 16px;
   position: fixed;
   top: 0;
-  background-color: skyblue;
-  border-bottom: 3px solid ${(p) => p.theme.secondaryColor};
+  background: darkcyan;
+  border-bottom: 3px solid grey;
 `;
 const HeaderLink = styled("div")`
   float: left;
@@ -38,28 +40,55 @@ class Header extends React.Component {
     if (!localStorage.getItem("selectedCompany")) return;
     return (
       <HeaderWrapper>
-        <a href="#default">CompanyLogo</a>
+        <Avatar
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS3yExOOPEm1JkFmB_GHgFb2Q60MYCCno2zqA&usqp=CAU"
+          size="55"
+          round={true}
+        />
         <div style={{ float: "right" }}>
           <HeaderLink>
-            <Link to="/account">Account</Link>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/account"
+            >
+              Account
+            </Link>
           </HeaderLink>
           <HeaderLink>
-            <Link to="/profile">Profile</Link>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/profile"
+            >
+              Profile
+            </Link>
           </HeaderLink>
           <HeaderLink>
-            <Link to="/company">Company</Link>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/company"
+            >
+              Company
+            </Link>
           </HeaderLink>
           <HeaderLink>
-            <Link to="/companies">Companies</Link>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/companies"
+            >
+              Companies
+            </Link>
           </HeaderLink>
+        </div>
+        <FloatLeftDiv top="20px" left='730px'>
           <button
+            style={{ background: "darkcyan", border: "none",color:'white',fontSize:'15px' }}
             onClick={() =>
               this.props.logout(this.props.auth, this.props.history)
             }
           >
             logout
           </button>
-        </div>
+        </FloatLeftDiv>
       </HeaderWrapper>
     );
   }

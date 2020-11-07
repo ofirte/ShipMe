@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { addCompany } from "../../actions/companyActions";
 import BaseForm from "../BaseForm";
+import { FloatLeftDiv } from "../shared/styles";
 const validate = (values) => {
   const errors = {};
   const re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -28,7 +29,7 @@ class CreateComapny extends React.Component {
   };
   render() {
     return (
-      <div>
+      <FloatLeftDiv>
         <BaseForm
           fields={fields}
           data={{}}
@@ -37,8 +38,9 @@ class CreateComapny extends React.Component {
           formName="createCompanyForm"
           imgFrom="profile"
           noUpdateDb={true}
+          size='100px'
         ></BaseForm>
-      </div>
+      </FloatLeftDiv>
     );
   }
 }

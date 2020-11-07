@@ -83,3 +83,17 @@ export const getAllCompanies=()=>(dispatch)=>{
     },
   }).then((res)=>dispatch({type:'FETCH_ALL_COMPANIES',payload:res.data}))
 }
+export const companyDelete = (companyId) => (dispatch) => {
+  const token = localStorage.getItem("token");
+  axios
+    .delete(
+      '/api/company/delete',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          companyId: companyId ,
+        },
+      }
+    )
+    .then(dispatch({type:'DELETE_COMPANY',payload:companyId}));
+};

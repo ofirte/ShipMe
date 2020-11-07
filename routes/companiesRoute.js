@@ -17,7 +17,7 @@ module.exports = (app) => {
     (req, res) => {
       Company.find({ _id: req.header("companyId") }).then((company) => {
         return res.send(company);
-      });
+      }).catch((err)=>{});
     }
   );
   app.post("/api/curr_user/companies/:id", (req, res) => {
@@ -60,10 +60,16 @@ module.exports = (app) => {
         address:true,
         email: true,
         website: true,
+        contactName:true,
         contactNumber: true,
+        contactJobTitle:true,
       })
       .then((companies) => {
         res.send(companies);
       });
   });
+
+app.delete('/api/company/delete',requireLogin,(req,res)=>{
+  Company.deleteOne({_id:req.headers.companyid}).then((del)=>res.send({}))
+  })
 };

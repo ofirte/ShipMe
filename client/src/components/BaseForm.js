@@ -2,7 +2,13 @@ import { reduxForm, Field } from "redux-form";
 import FormField from "./FormFiled";
 import { uploadImg } from "../actions";
 import { connect } from "react-redux";
-import { FormSubmit, HeaderDiv } from "./shared/styles";
+import {
+  Content,
+  FileInput,
+  FormSubmit,
+  TopForm,
+  MiniContent,
+} from "./shared/styles";
 import Avatar from "react-avatar";
 const BaseForm = ({
   fields,
@@ -16,10 +22,32 @@ const BaseForm = ({
   userId,
   formName,
   noUpdateDb,
-  image
+  image,
+  defaultValue,
+  size
 }) => {
-  const renderFields = () => {
-    return fields.map((field, index) => {
+  const renderTopFields = () => {
+    const renderdFileds = fields.slice(0, 2).map((field, index) => {
+      return (
+        <Field
+          key={index}
+          type={field.type}
+          name={field.name}
+          label={field.label}
+          options={field.options}
+          read={field.read}
+          component={FormField}
+        ></Field>
+      );
+    });
+    return (
+      <TopForm>
+        <MiniContent size={size}>{renderdFileds}</MiniContent>
+      </TopForm>
+    );
+  };
+  const renderBottomFields = () => {
+    return fields.slice(2).map((field, index) => {
       return (
         <Field
           key={index}
@@ -35,36 +63,37 @@ const BaseForm = ({
   };
   const renderAvater = () => {
     return (
-      <HeaderDiv>
+      <div>
         <Avatar
-          size="100"
+          size="90"
           facebook-id="invalidfacebookusername"
-          src={data||image ? data.imageUrl||image : ""}
+          src={data || image ? data.imageUrl || image : ""}
           round={true}
         />
-        <h3>Company info</h3>
-      </HeaderDiv>
+        <div>{renderImageSet()}</div>
+      </div>
     );
   };
   const renderImageSet = () => {
     return (
-      <input
+      <FileInput
         type="file"
         onChange={(e) => {
-          uploadImg(e.target.files[0], imgFrom, url, userId,noUpdateDb);
+          uploadImg(e.target.files[0], imgFrom, url, userId, noUpdateDb);
         }}
-      ></input>
+      ></FileInput>
     );
   };
   return (
-    <div>
+    <Content>
+      <h3 style={{ display: "inline-block" }}>Company info</h3>
       {renderAvater()}
       <form onSubmit={handleSubmit(() => updateData(formValues))}>
-        {renderImageSet()}
-        {renderFields()}
+        {renderTopFields()}
+        <div>{renderBottomFields()}</div>
         <FormSubmit type="submit" value="save" submit></FormSubmit>
       </form>
-    </div>
+    </Content>
   );
 };
 
@@ -74,7 +103,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: ownProps.data ? ownProps.data : {},
     form: ownProps.formName,
     validate: ownProps.validate,
-    image:state.image
+    image: state.image,
   };
 };
 

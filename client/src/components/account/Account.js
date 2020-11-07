@@ -1,5 +1,5 @@
 import React from "react";
-import { Content } from "../shared/styles";
+import { FloatLeftDiv, FloatRightDiv, Vline } from "../shared/styles";
 import { connect } from "react-redux";
 import { fetchCompanyData } from "../../actions/companyActions";
 import { onUserEdit } from "../../actions/userActions";
@@ -26,42 +26,72 @@ class Account extends React.Component {
   };
   renderSearchBar() {
     return (
-      <SearchBar
-        onUserEdit={this.onUserEdit}
-        onCreateUser={() =>
-          this.setState({ createUserRender: true, editRender: false ,createCompanyRender:false})
-        }
-        onCreateCompanyClick={()=>this.setState({ createUserRender: false, editRender: false,createCompanyRender:true })}
-      />
+      <FloatRightDiv top="80px" left="300px" marginLeft="-300">
+        <SearchBar
+          onUserEdit={this.onUserEdit}
+          onCreateUser={() =>
+            this.setState({
+              createUserRender: true,
+              editRender: false,
+              createCompanyRender: false,
+            })
+          }
+          onCreateCompanyClick={() =>
+            this.setState({
+              createUserRender: false,
+              editRender: false,
+              createCompanyRender: true,
+            })
+          }
+        />
+      </FloatRightDiv>
     );
   }
   renderCreateCompany() {
-    return <CreateCompany onSubmit={() => {
-      this.setState({ createCompanyRender: false });
-    }} />;
+    return (
+      <CreateCompany
+        onSubmit={() => {
+          this.setState({ createCompanyRender: false });
+        }}
+      />
+    );
   }
   renderCreateUser() {
     return (
       <CreateUser
         onSubmit={() => {
           this.setState({ createUserRender: false });
+          this.props.fetchCompanyData();
         }}
       />
     );
   }
   renderEditUser() {
     return (
-      <EditUser
-        close={() => {
-          this.setState({ createUserRender: false});
-        }}
-        userInfo={this.props.userInfo}
-      />
+      <FloatLeftDiv>
+        <EditUser
+          close={() => {
+            this.setState({ createUserRender: false });
+          }}
+          userInfo={this.props.userInfo}
+        />
+      </FloatLeftDiv>
     );
   }
   renderContent() {
-    if (this.props.auth)
+    if (this.props.auth) {
       if (this.props.auth.data.userType === 0) return <h1>no Access</h1>;
+      if (
+        this.props.auth.data.userType === 2 &&
+        window.location.pathname === "/account"
+      )
+        return (
+          <h1 style={{ position: "absolute", top: "80px" }}>
+            Super admin user has no spesific account,
+            <br /> view any account from companies bar
+          </h1>
+        );
+    }
     if (this.state.createUserRender)
       return (
         <div>
@@ -87,7 +117,12 @@ class Account extends React.Component {
   }
 
   render() {
-    return <Content>{this.renderContent()}</Content>;
+    return (
+      <div>
+        <Vline />
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 const mapStateToProps = (state) => {

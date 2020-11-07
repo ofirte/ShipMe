@@ -24,7 +24,6 @@ const FormField = ({ label, input, meta, type, read, options }) => {
       <FormInput
         {...input}
         type={type}
-        style={{ marginBottom: "10px" }}
         readOnly={read}
       />
       <ErrorDiv style={{ marginBottom: "10px" }}>
