@@ -3,7 +3,7 @@
 ShipMe App.
 
 ## Usage
-1.the website is available using this link
+1.the website is available using this link (only on pc)
 ```
 https://salty-springs-90707.herokuapp.com/
 ```
