@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const uploadImg = (img, from,url,userId,noUpdateDb) => (dispatch) => {
+export const uploadImg = (img, from, url, userId, noUpdateDb) => (dispatch) => {
   const token = localStorage.getItem("token");
   var myHeaders = new Headers();
   myHeaders.append(
@@ -17,11 +17,14 @@ export const uploadImg = (img, from,url,userId,noUpdateDb) => (dispatch) => {
   };
   fetch("https://api.imgur.com/3/image", requestOptions)
     .then((response) => response.text())
-    .then((result) =>{
-      const u=url?url:''
-      if(noUpdateDb){
-        dispatch({type:'UPDATE_IMAGE_LOCAL',payload:JSON.parse(result).data.link})
-        return ''
+    .then((result) => {
+      const u = url ? url : "";
+      if (noUpdateDb) {
+        dispatch({
+          type: "UPDATE_IMAGE_LOCAL",
+          payload: JSON.parse(result).data.link,
+        });
+        return "";
       }
       axios
         .post(
@@ -44,20 +47,18 @@ export const uploadImg = (img, from,url,userId,noUpdateDb) => (dispatch) => {
               type: "COMPANY_IMG_CHANGE",
               payload: JSON.parse(result).data.link,
             });
-          } else if(!userId) {
+          } else if (!userId) {
             dispatch({
               type: "PROFILE_IMG_CHANGE",
               payload: JSON.parse(result).data.link,
             });
-          }
-          else {
+          } else {
             dispatch({
               type: "USER_IMG_CHANGE",
               payload: JSON.parse(result).data.link,
             });
           }
-        })
-      })
+        });
+    })
     .catch((error) => console.log("error", error));
 };
-

@@ -23,7 +23,8 @@ const fields = [
 ];
 class CreateComapny extends React.Component {
   update = (formValues) => {
-    if (this.props.image) formValues.createCompanyForm.values.imageUrl = this.props.image;
+    if (this.props.image)
+      formValues.createCompanyForm.values.imageUrl = this.props.image;
     this.props.addCompany(formValues.createCompanyForm.values);
     this.props.onSubmit();
   };
@@ -38,7 +39,7 @@ class CreateComapny extends React.Component {
           formName="createCompanyForm"
           imgFrom="profile"
           noUpdateDb={true}
-          size='100px'
+          size="100px"
         ></BaseForm>
       </FloatLeftDiv>
     );

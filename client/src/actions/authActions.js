@@ -1,6 +1,6 @@
 import axios from "axios";
 import { fetchUserToList } from "./userActions";
-import{fetchCompanyUsers} from './companyActions'
+import { fetchCompanyUsers } from "./companyActions";
 export const signUp = (user, history) => (dispatch) => {
   user.userType = 1;
   axios
@@ -34,7 +34,8 @@ export const createUser = (user) => (dispatch) => {
             },
           }
         )
-        .then(() => dispatch(fetchUserToList(res.data.userId))).then(()=>dispatch(fetchCompanyUsers()));
+        .then(() => dispatch(fetchUserToList(res.data.userId)))
+        .then(() => dispatch(fetchCompanyUsers()));
     })
     .catch((err) => console.log(err));
 };

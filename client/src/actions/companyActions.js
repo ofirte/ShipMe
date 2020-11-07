@@ -63,37 +63,40 @@ export const fetchCompanyUsers = () => (dispatch) => {
 };
 export const addCompany = (newCompany) => (dispatch) => {
   const token = localStorage.getItem("token");
-  axios.post(
-    "/api/company/addcompany",
-    {
-      newCompany,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  ).then((res)=>dispatch({type:'ADD_COMPANY',payload:newCompany}))
-};
-export const getAllCompanies=()=>(dispatch)=>{
-  const token = localStorage.getItem("token");
-  axios.get('/api/company/all',{
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((res)=>dispatch({type:'FETCH_ALL_COMPANIES',payload:res.data}))
-}
-export const companyDelete = (companyId) => (dispatch) => {
-  const token = localStorage.getItem("token");
   axios
-    .delete(
-      '/api/company/delete',
+    .post(
+      "/api/company/addcompany",
+      {
+        newCompany,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          companyId: companyId ,
         },
       }
     )
-    .then(dispatch({type:'DELETE_COMPANY',payload:companyId}));
+    .then((res) => dispatch({ type: "ADD_COMPANY", payload: newCompany }));
+};
+export const getAllCompanies = () => (dispatch) => {
+  const token = localStorage.getItem("token");
+  axios
+    .get("/api/company/all", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) =>
+      dispatch({ type: "FETCH_ALL_COMPANIES", payload: res.data })
+    );
+};
+export const companyDelete = (companyId) => (dispatch) => {
+  const token = localStorage.getItem("token");
+  axios
+    .delete("/api/company/delete", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        companyId: companyId,
+      },
+    })
+    .then(dispatch({ type: "DELETE_COMPANY", payload: companyId }));
 };

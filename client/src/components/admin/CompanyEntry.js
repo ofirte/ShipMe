@@ -50,7 +50,6 @@ class CompanyEntry extends React.Component {
     );
   }
   render() {
-    console.log(Object.entries(this.props.company));
     return <tr>{this.renderData()}</tr>;
   }
 }

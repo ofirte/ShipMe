@@ -56,7 +56,6 @@ class Companies extends React.Component {
       return (
         <CompanyEntry key={index}
           onEditCompanyClick={(compId) => {
-            console.log(compId);
             localStorage.setItem("selectedCompany", compId);
             this.setState({
               renderEditCompany: true,
