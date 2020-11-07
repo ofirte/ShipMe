@@ -2,7 +2,7 @@ import axios from "axios";
 import { fetchUserToList } from "./userActions";
 import{fetchCompanyUsers} from './companyActions'
 export const signUp = (user, history) => (dispatch) => {
-  user.userType = 2;
+  user.userType = 1;
   axios
     .post("/api/signup", user)
     .then((res) => {
